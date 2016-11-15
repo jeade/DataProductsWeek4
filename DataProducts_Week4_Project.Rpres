@@ -1,0 +1,64 @@
+Developing Data Products Week4 Project
+========================================================
+author: Jeremy Eade
+date: 14 November 2016
+autosize: false
+
+Background
+========================================================
+
+<small>I have a fitbit tracker and have collected my activity data
+for October 2016.
+
+The data includes:
+
+- Calories Burned
+- Steps
+- Distance
+- Floors
+- Minutes.Sedentary
+- Minutes.Lightly.Active
+- Minutes.Fairly.Active
+- Minutes.Very.Active
+
+My Shiny App (https://jeremyeade.shinyapps.io/DataProducts_Week4_Project/) shows this data and allows users to explore how my different activities impacted my calories burned.</small>
+***
+![alt text](fitbit.jpg)
+
+How it works
+========================================================
+<small>It was relatively simple to build this application.
+
+1. I logged into my fitbit account and exported activity data from October 2016 to a .csv file.
+
+2. I wrote the ui.R (GUI) code, using radio buttons to allow the user to select which activity to compare against calories burned.
+
+3. I wrote the server.R (server) code, which took the user selection from the radio button (selected activity), read the data from the .csv file and then built a simple plot and linear model using the selected activity and calories burned.
+
+The result is that you can select different activities and see the relation against calories burned.</small>
+
+
+Shiny Application
+========================================================
+<small>Here is a screenshot of the application:</small>
+***
+![alt text](myapp.jpg)
+
+
+Steps and Secentary
+========================================================
+<small>Here is an example of the plot showing steps and minutes sedentary vs calories burned:</small>
+
+```{r, echo=FALSE,fig.align='left'}
+source("getData.R")
+df <- getData()
+
+plot(df$Steps,df$Calories.Burned,col="blue",main="Calories Burned vs Steps",xlab="Steps",ylab="Calories Burned")
+abline(lm(df$Calories.Burned~df$Steps),col="red")
+
+```
+***
+```{r, echo=FALSE,fig.align='right'}
+plot(df$Minutes.Sedentary,df$Calories.Burned,col="blue",main="Calories Burned vs Minutes.Sedentary",xlab="Minutes.Sedentary",ylab="Calories Burned")
+abline(lm(df$Calories.Burned~df$Minutes.Sedentary),col="red")
+```
